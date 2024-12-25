@@ -42,6 +42,9 @@
         <activity
             android:name=".TakeMedicationActivity"
             android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="false" />
 
     </application>
 </manifest>

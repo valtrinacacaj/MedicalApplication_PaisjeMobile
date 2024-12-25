@@ -1,3 +1,6 @@
+
+
+
 package com.fiek.medicalapplication_paisjemobile;
 
 import android.content.ContentValues;
@@ -10,53 +13,61 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String databaseName = "MedicalApp.db";
+    // Emri i bazës së të dhënave
+    public static final String DATABASE_NAME = "MedicalApp.db";
+    public static final String TABLE_NAME = "allusers"; // Emri i tabelës
 
+    // Konstruktori
     public DatabaseHelper(@Nullable Context context) {
-        super(context,"MedicalApp.db", null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase MyDatabase) {
-    MyDatabase.execSQL("create table allusers(email TEXT primary key, password TEXT)");
-
+        // Krijimi i tabelës
+        MyDatabase.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                "email TEXT PRIMARY KEY, " +
+                "password TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase MyDatabase, int oldVersion, int newVersion) {
-    MyDatabase.execSQL("drop Table if exists allusers");
+        // Drop tabela nëse ekziston
+        MyDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(MyDatabase);
     }
 
-    public Boolean insertData(String email, String password){
+    // Metoda për të shtuar të dhëna
+    public Boolean insertData(String email, String password) {
         SQLiteDatabase MyDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         contentValues.put("password", password);
-        long result = MyDatabase.insert("users", null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+
+        long result = MyDatabase.insert(TABLE_NAME, null, contentValues);
+        return result != -1; // Kthe `true` nëse futja është e suksesshme
     }
 
-    public Boolean checkEmail(String email){
+    // Metoda për të kontrolluar nëse email-i ekziston
+    public Boolean checkEmail(String email) {
         SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("Select * from users where email = ?", new String[]{email});
-        if(cursor.getCount() > 0) {
-            return true;
-        }else {
-            return false;
-        }
+        Cursor cursor = MyDatabase.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ?", new String[]{email});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        return exists;
     }
 
-    public Boolean checkEmailPassword(String email, String password){
+    // Metoda për të kontrolluar email-in dhe password-in
+    public Boolean checkEmailPassword(String email, String password) {
         SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("Select * from users where email = ? and password = ?", new String[]{email, password});
-        if (cursor.getCount() > 0) {
-            return true;
-        }else {
-            return false;
-        }
+        Cursor cursor = MyDatabase.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ? AND password = ?", new String[]{email, password});
+        boolean valid = cursor.getCount() > 0;
+        cursor.close();
+        return valid;
     }
 }
+
+
+
+
+

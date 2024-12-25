@@ -3,7 +3,6 @@ package com.fiek.medicalapplication_paisjemobile;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.fiek.medicalapplication_paisjemobile.databinding.ActivityLogInBinding;
@@ -19,53 +18,50 @@ public class LogInActivity extends AppCompatActivity {
         binding = ActivityLogInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        try {
-            databaseHelper = new DatabaseHelper(this);
+        // Instanco DatabaseHelper
+        databaseHelper = new DatabaseHelper(this);
 
-            binding.loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String email = binding.loginEmail.getText().toString();
-                    String password = binding.loginPassword.getText().toString();
+        // Klikimi për Login
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = binding.loginEmail.getText().toString().trim();
+                String password = binding.loginPassword.getText().toString().trim();
 
-                    if (email.isEmpty() || password.isEmpty()) {
-                        Toast.makeText(LogInActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LogInActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Kontrollo nëse email dhe password janë të sakta
+                    boolean isValid = databaseHelper.checkEmailPassword(email, password);
+                    if (isValid) {
+                        Toast.makeText(LogInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        // Kalo në HomeActivity
+                        Intent intent = new Intent(LogInActivity.this,SplashActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else {
-                        Boolean checkCredentials = databaseHelper.checkEmailPassword(email, password);
-                        if (checkCredentials) {
-                            // Shfaq animacionin për 3 sekonda
-                            binding.gifImageView.setVisibility(View.VISIBLE);  // Trego GIF
-
-                            // Përdor një handler për vonesën dhe fshij GIF pas 3 sekondash
-                            new android.os.Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Fshi GIF dhe kaloni në HomeActivity
-                                    binding.gifImageView.setVisibility(View.GONE);  // Fshi GIF
-                                    Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish(); // Përfundoni aktivitetin aktual
-                                }
-                            }, 3000); // 3 sekonda vonesë
-
-                            Toast.makeText(LogInActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LogInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(LogInActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            }
+        });
 
-            binding.signupRedirectText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                    startActivity(intent);
-                }
-            });
-        } catch (Exception e) {
-            Log.e("LogInActivity", "Error initializing the activity: " + e.getMessage());
-            Toast.makeText(this, "An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
-        }
+        // Redirekto te SignUpActivity nëse përdoruesi nuk ka llogari
+        binding.signupRedirectText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
+
+
+
+
+
+
+
+
+
