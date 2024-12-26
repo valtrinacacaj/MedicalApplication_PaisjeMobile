@@ -31,16 +31,19 @@
         android:layout_marginTop="10dp" />
 
     <!-- Profile Icon -->
+
+    <!-- GridLayout for Cards -->
     <ImageView
         android:id="@+id/profileIcon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_profile"
-        android:contentDescription="Profile Icon" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="2dp"
+        android:contentDescription="Profile Icon"
+        android:src="@drawable/ic_profile" />
 
-    <!-- GridLayout for Cards -->
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
