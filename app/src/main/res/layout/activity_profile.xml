@@ -20,118 +20,100 @@
             android:scaleType="centerCrop" />
 
         <!-- Name -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Emri:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Emri"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Surname -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_surname_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mbiemri:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_surname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mbiemri"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Age -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_age_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mosha:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mosha"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Phone -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_phone_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Numri i Telefonit:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nr. Tel"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Address -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Adresa:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/et_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_border"
-            android:layout_marginBottom="16dp"
-            android:importantForAccessibility="yes" />
+            android:layout_marginBottom="16dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Adresa"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:background="@drawable/edittext_border" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Logout Button -->
         <Button
