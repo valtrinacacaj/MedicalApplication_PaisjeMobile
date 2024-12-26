@@ -1,11 +1,45 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAppointments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/editTextAppointmentDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Manage Your Appointments"
-        android:layout_centerInParent="true"
-        android:textSize="20sp" />
-</RelativeLayout>
+        android:hint="Enter date (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/editTextAppointmentDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonAddAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add" />
+
+        <Button
+            android:id="@+id/buttonUpdateAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>
