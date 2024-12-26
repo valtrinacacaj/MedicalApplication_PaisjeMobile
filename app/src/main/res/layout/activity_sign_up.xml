@@ -74,7 +74,7 @@
                 android:padding="8dp"
                 android:textSize="18sp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/lavander"/>
+                android:textColor="@color/blue"/>
 
 
 
