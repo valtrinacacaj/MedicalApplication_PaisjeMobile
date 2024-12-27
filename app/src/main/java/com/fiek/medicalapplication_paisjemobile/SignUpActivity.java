@@ -1,5 +1,7 @@
 package com.fiek.medicalapplication_paisjemobile;
 
+import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,30 +32,33 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = binding.signupPassword.getText().toString();
                 String RepeatPassword = binding.signupRepeatpassword.getText().toString();
 
-                if(email.equals("")||password.equals("")||RepeatPassword.equals(""))
+                if (email.equals("") || password.equals("") || RepeatPassword.equals(""))
                     Toast.makeText(SignUpActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
-                else{
-                    if(password.equals(RepeatPassword)){
-                        Boolean checkUserEmail = databaseHelper.checkEmail(email);
-                        if(checkUserEmail == false){
-                            Boolean insert = databaseHelper.insertData(email, password);
-                            if(insert == true){
-                                Toast.makeText(SignUpActivity.this, "Signup Successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),LogInActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(SignUpActivity.this, "Signup Failed!", Toast.LENGTH_SHORT).show();
+                else {
+                    if (password.equals(RepeatPassword)) {
+                        String passwordValidationMessage = getPasswordValidationMessage(password);
+                        if (passwordValidationMessage == null) {
+                            Boolean checkUserEmail = databaseHelper.checkEmail(email);
+                            if (!checkUserEmail) {
+                                Boolean insert = databaseHelper.insertData(email, password);
+                                if (insert) {
+                                    Toast.makeText(SignUpActivity.this, "Signup Successfully!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    showAlert("Signup Failed!");
+                                }
+                            } else {
+                                showAlert("User already exists! Please login");
                             }
+                        } else {
+                            showAlert(passwordValidationMessage);
                         }
-                        else{
-                            Toast.makeText(SignUpActivity.this, "User already exists! Please login", Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        Toast.makeText(SignUpActivity.this, "Invalid Password!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        showAlert("Passwords do not match!");
                     }
                 }
             }
-
         });
 
         binding.loginRedirectText.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +67,30 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
+
+
         });
+    }
+
+    private String getPasswordValidationMessage(String password) {
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long.";
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return "Password must contain at least one capital letter.";
+        }
+        if (!password.matches(".*\\d.*")) {
+            return "Password must contain at least one number.";
+        }
+        return null; // Password is valid
+    }
+
+    private void showAlert(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
