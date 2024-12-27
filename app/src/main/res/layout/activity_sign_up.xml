@@ -19,6 +19,47 @@
             android:layout_marginTop="380dp"
             android:padding="20dp"
             >
+
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/signup_name"
+                android:background="@drawable/blue_border"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"
+                android:hint="Name"
+                android:drawableLeft="@drawable/baseline_drive_file_rename_outline_24"
+                android:drawablePadding="8dp">
+            </EditText>
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/signup_surname"
+                android:background="@drawable/blue_border"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"
+                android:hint="Surname"
+                android:drawableLeft="@drawable/baseline_person_outline_24"
+                android:drawablePadding="8dp">
+            </EditText>
+
+
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:id="@+id/signup_age"
+                android:background="@drawable/blue_border"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"
+                android:hint="Age"
+                android:drawableLeft="@drawable/baseline_calendar_today_24"
+                android:drawablePadding="8dp">
+            </EditText>
+
+
             <EditText
                 android:layout_width="350dp"
                 android:layout_height="60dp"

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.fiek.medicalapplication_paisjemobile.databinding.ActivitySignUpBinding;
 
+
 public class SignUpActivity extends AppCompatActivity {
 
 
@@ -25,22 +26,27 @@ public class SignUpActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
+
+
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String name = binding.signupName.getText().toString();
+                String surname = binding.signupSurname.getText().toString();
+                String age = binding.signupAge.getText().toString();
                 String email = binding.signupEmail.getText().toString();
                 String password = binding.signupPassword.getText().toString();
-                String RepeatPassword = binding.signupRepeatpassword.getText().toString();
+                String repeatPassword = binding.signupRepeatpassword.getText().toString();
 
-                if (email.equals("") || password.equals("") || RepeatPassword.equals(""))
-                    Toast.makeText(SignUpActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
-                else {
-                    if (password.equals(RepeatPassword)) {
+                if (name.equals("") || surname.equals("") || email.equals("") || password.equals("") || repeatPassword.equals("")) {
+                    showAlert("All fields are mandatory");
+                } else {
+                    if (password.equals(repeatPassword)) {
                         String passwordValidationMessage = getPasswordValidationMessage(password);
                         if (passwordValidationMessage == null) {
                             Boolean checkUserEmail = databaseHelper.checkEmail(email);
                             if (!checkUserEmail) {
-                                Boolean insert = databaseHelper.insertData(email, password);
+                                Boolean insert = databaseHelper.insertData(name, surname, age, email, password);
                                 if (insert) {
                                     Toast.makeText(SignUpActivity.this, "Signup Successfully!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
@@ -67,10 +73,9 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
-
-
         });
     }
+
 
     private String getPasswordValidationMessage(String password) {
         if (password.length() < 8) {

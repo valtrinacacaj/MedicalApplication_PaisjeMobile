@@ -26,6 +26,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase MyDatabase) {
         // Krijimi i tabelës
         MyDatabase.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                "name TEXT," +
+                "surname TEXT," +
                 "email TEXT PRIMARY KEY, " +
                 "password TEXT)");
     }
@@ -38,9 +40,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Metoda për të shtuar të dhëna
-    public Boolean insertData(String email, String password) {
+    public Boolean insertData(String name, String surname,String age, String email, String password) {
         SQLiteDatabase MyDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("name",name);
+        contentValues.put("surname", surname);
+        contentValues.put("age", age);
         contentValues.put("email", email);
         contentValues.put("password", password);
 
