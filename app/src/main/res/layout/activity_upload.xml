@@ -6,9 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UpcomingAppointmentActivity">
+    tools:context=".UploadActivity"
+    tools:ignore="ExtraText">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardUploadAppointment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -57,17 +59,15 @@
                 android:gravity="start|center_vertical"
                 android:textColor="@color/blue"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+            <android.widget.DatePicker
                 android:id="@+id/uploadDate"
-                android:background="@drawable/blue_border"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:padding="16dp"
                 android:layout_marginBottom="40dp"
-                android:hint="Enter date"
-                android:gravity="start|center_vertical"
-                android:textColor="@color/blue"/>
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:importantForAccessibility="yes"/>
 
             <Button
                 android:layout_width="match_parent"

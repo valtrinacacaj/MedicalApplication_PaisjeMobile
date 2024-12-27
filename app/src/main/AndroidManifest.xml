@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fiek.medicalapplication_paisjemobile"
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
@@ -48,6 +49,9 @@
 
         <activity
             android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadActivity"
             android:exported="false" />
     </application>
 </manifest>
