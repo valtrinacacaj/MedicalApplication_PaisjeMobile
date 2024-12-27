@@ -1,6 +1,3 @@
-
-
-
 package com.fiek.medicalapplication_paisjemobile;
 
 import android.content.ContentValues;
@@ -13,9 +10,9 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Emri i bazës së të dhënave
+    // Emri i bazës së të dhënave dhe tabelës
     public static final String DATABASE_NAME = "MedicalApp.db";
-    public static final String TABLE_NAME = "allusers"; // Emri i tabelës
+    public static final String TABLE_NAME = "allusers";
 
     // Konstruktori
     public DatabaseHelper(@Nullable Context context) {
@@ -28,22 +25,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         MyDatabase.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
                 "name TEXT," +
                 "surname TEXT," +
+                "age TEXT," +
                 "email TEXT PRIMARY KEY, " +
                 "password TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase MyDatabase, int oldVersion, int newVersion) {
-        // Drop tabela nëse ekziston
+        // Fshij tabelën nëse ekziston dhe rikrijo
         MyDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(MyDatabase);
     }
 
     // Metoda për të shtuar të dhëna
-    public Boolean insertData(String name, String surname,String age, String email, String password) {
+    public Boolean insertData(String name, String surname, String age, String email, String password) {
         SQLiteDatabase MyDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name",name);
+        contentValues.put("name", name);
         contentValues.put("surname", surname);
         contentValues.put("age", age);
         contentValues.put("email", email);
@@ -71,17 +69,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return valid;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
