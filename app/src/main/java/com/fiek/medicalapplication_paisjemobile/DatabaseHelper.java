@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         MyDatabase.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
                 "name TEXT," +
                 "surname TEXT," +
-                "age TEXT," +
+                "age INTEGER," +
                 "email TEXT PRIMARY KEY, " +
                 "password TEXT)");
     }
