@@ -1,45 +1,23 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".UpcomingAppointmentActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAppointments"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <EditText
-        android:id="@+id/editTextAppointmentDate"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter date (YYYY-MM-DD)" />
+        android:id="@+id/fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="40dp"
+        android:src="@drawable/baseline_add_24"
+        android:backgroundTint="@color/blue"
+        app:tint="@color/white">
 
-    <EditText
-        android:id="@+id/editTextAppointmentDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter description" />
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
 
-        <Button
-            android:id="@+id/buttonAddAppointment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add" />
-
-        <Button
-            android:id="@+id/buttonUpdateAppointment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:visibility="gone" />
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
