@@ -52,9 +52,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Save Button (Ruaj të dhënat e modifikuara)
         btnSave.setOnClickListener(v -> {
-            saveUserData();
+            saveUserData(userEmail);
             enableEditing(false);
         });
+
+        // Disable editing by default
+        enableEditing(false);
     }
 
     // Metodë për të marrë të dhënat e përdoruesit nga baza e të dhënave
@@ -90,23 +93,29 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     // Metodë për të ruajtur të dhënat e modifikuara
-    private void saveUserData() {
+    private void saveUserData(String email) {
         String name = etName.getText().toString().trim();
         String surname = etSurname.getText().toString().trim();
-        String age = etAge.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
+        String ageStr = etAge.getText().toString().trim();
 
-        if (name.isEmpty() || surname.isEmpty() || age.isEmpty()) {
+        if (name.isEmpty() || surname.isEmpty() || ageStr.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Përditëso të dhënat në bazën e të dhënave
-        boolean isUpdated = databaseHelper.updateUserData(name, surname, age, email);
-        if (isUpdated) {
-            Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+        // Validim për moshën që të jetë numerike
+        try {
+            int age = Integer.parseInt(ageStr);
+
+            // Përditëso të dhënat në bazën e të dhënave
+            boolean isUpdated = databaseHelper.updateUserData(name, surname, String.valueOf(age), email);
+            if (isUpdated) {
+                Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Age must be a valid number", Toast.LENGTH_SHORT).show();
         }
     }
 }

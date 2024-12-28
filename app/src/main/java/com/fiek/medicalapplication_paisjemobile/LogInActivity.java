@@ -32,10 +32,10 @@ public class LogInActivity extends AppCompatActivity {
                 boolean isValid = databaseHelper.checkEmailPassword(email, password);
                 if (isValid) {
                     Toast.makeText(LogInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
-                    intent.putExtra("USER_EMAIL", email); // Dërgo email-in te HomeActivity
+                    Intent intent = new Intent(LogInActivity.this, SplashActivity.class);
+                    intent.putExtra("USER_EMAIL", email); // Dërgo email-in te SplashActivity
                     startActivity(intent);
-                    finish();
+                    finish(); // Mbyll LogInActivity
                 } else {
                     Toast.makeText(LogInActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }

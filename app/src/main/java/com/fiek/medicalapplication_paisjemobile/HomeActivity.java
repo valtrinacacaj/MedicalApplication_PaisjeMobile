@@ -7,13 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        // Merr email-in nga LogInActivity
-        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        // Merr email-in që vjen nga SplashActivity
+        userEmail = getIntent().getStringExtra("USER_EMAIL");
 
         // Linking the CardViews
         androidx.cardview.widget.CardView cardUpcomingAppointment = findViewById(R.id.cardUpcomingAppointment);

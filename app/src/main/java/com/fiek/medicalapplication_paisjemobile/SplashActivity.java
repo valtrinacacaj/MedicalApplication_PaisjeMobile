@@ -12,18 +12,19 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Koha e animacionit (p.sh., 3 sekonda)
+        // Merr email-in që vjen nga LogInActivity
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+
+        // Koha e animacionit (3 sekonda)
         int splashTime = 3000;
 
         // Pas kalimit të kohës, kalon në HomeActivity
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Kalo në HomeActivity
-                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish(); // Mbyll SplashActivity pasi kalon në HomeActivity
-            }
+        new Handler().postDelayed(() -> {
+            // Kalo në HomeActivity duke kaluar email-in
+            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+            intent.putExtra("USER_EMAIL", userEmail); // Dërgo email-in te HomeActivity
+            startActivity(intent);
+            finish(); // Mbyll SplashActivity pasi kalon në HomeActivity
         }, splashTime);
     }
 }
