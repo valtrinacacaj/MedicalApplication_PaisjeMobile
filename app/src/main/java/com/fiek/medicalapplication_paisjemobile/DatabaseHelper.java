@@ -10,36 +10,32 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Emri i bazës së të dhënave dhe tabelës
     public static final String DATABASE_NAME = "MedicalApp.db";
     public static final String TABLE_NAME = "allusers";
 
-    // Konstruktori
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase MyDatabase) {
-        // Krijimi i tabelës
-        MyDatabase.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT," +
                 "surname TEXT," +
                 "age INTEGER," +
-                "email TEXT PRIMARY KEY, " +
+                "email TEXT PRIMARY KEY," +
                 "password TEXT)");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase MyDatabase, int oldVersion, int newVersion) {
-        // Fshij tabelën nëse ekziston dhe rikrijo
-        MyDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(MyDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
-    // Metoda për të shtuar të dhëna
     public Boolean insertData(String name, String surname, String age, String email, String password) {
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("surname", surname);
@@ -47,25 +43,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("email", email);
         contentValues.put("password", password);
 
-        long result = MyDatabase.insert(TABLE_NAME, null, contentValues);
-        return result != -1; // Kthe `true` nëse futja është e suksesshme
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        return result != -1;
     }
 
-    // Metoda për të kontrolluar nëse email-i ekziston
     public Boolean checkEmail(String email) {
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ?", new String[]{email});
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ?", new String[]{email});
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
     }
 
-    // Metoda për të kontrolluar email-in dhe password-in
     public Boolean checkEmailPassword(String email, String password) {
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ? AND password = ?", new String[]{email, password});
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE email = ? AND password = ?", new String[]{email, password});
         boolean valid = cursor.getCount() > 0;
         cursor.close();
         return valid;
+    }
+
+    public Cursor getFullUserData(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE email = ?";
+        return db.rawQuery(query, new String[]{email});
+    }
+
+    public boolean updateUserData(String name, String surname, String age, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("surname", surname);
+        contentValues.put("age", age);
+
+        int result = db.update(TABLE_NAME, contentValues, "email = ?", new String[]{email});
+        return result > 0;
     }
 }

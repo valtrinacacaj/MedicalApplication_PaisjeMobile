@@ -1,103 +1,112 @@
 package com.fiek.medicalapplication_paisjemobile;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.textfield.TextInputEditText;
-import android.widget.Button;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextInputLayout etNameLayout, etSurnameLayout, etAgeLayout, etEmailLayout, etPhoneLayout, etAddressLayout;
-    private TextInputEditText etName, etSurname, etAge, etEmail, etPhone, etAddress;
-    private Button btnLogout;
+    private EditText etName, etSurname, etAge, etEmail;
+    private Button btnLogout, btnEdit, btnSave;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Initialize views
-        etNameLayout = findViewById(R.id.et_name_layout);
-        etSurnameLayout = findViewById(R.id.et_surname_layout);
-        etAgeLayout = findViewById(R.id.et_age_layout);
-        etEmailLayout = findViewById(R.id.et_email_layout);
-        etPhoneLayout = findViewById(R.id.et_phone_layout);
-        etAddressLayout = findViewById(R.id.et_address_layout);
-
+        // Inicializimi i view-ve
         etName = findViewById(R.id.et_name);
         etSurname = findViewById(R.id.et_surname);
         etAge = findViewById(R.id.et_age);
         etEmail = findViewById(R.id.et_email);
-        etPhone = findViewById(R.id.et_phone);
-        etAddress = findViewById(R.id.et_address);
 
         btnLogout = findViewById(R.id.btn_logout);
+        btnEdit = findViewById(R.id.btn_edit);
+        btnSave = findViewById(R.id.btn_save);
 
-        // Logout button click listener
+        // Inicializimi i DatabaseHelper
+        databaseHelper = new DatabaseHelper(this);
+
+        // Marrja e email-it të përdoruesit që është loguar
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+
+        // Thirrja e funksionit për të marrë të dhënat e përdoruesit nga databaza
+        fetchUserData(userEmail);
+
+        // Logout Button
         btnLogout.setOnClickListener(v -> {
-            if (isValidInput()) {
-                // Perform logout actions here (e.g., navigate to login screen)
-                // Example: startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-            }
+            Intent intent = new Intent(ProfileActivity.this, LogInActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Edit Button (Aktivizon fushat për modifikim)
+        btnEdit.setOnClickListener(v -> enableEditing(true));
+
+        // Save Button (Ruaj të dhënat e modifikuara)
+        btnSave.setOnClickListener(v -> {
+            saveUserData();
+            enableEditing(false);
         });
     }
 
-    // Validate input fields
-    private boolean isValidInput() {
-        boolean isValid = true;
+    // Metodë për të marrë të dhënat e përdoruesit nga baza e të dhënave
+    private void fetchUserData(String email) {
+        Cursor cursor = databaseHelper.getFullUserData(email);
 
-        // Name validation
-        if (TextUtils.isEmpty(etName.getText())) {
-            etNameLayout.setError("Emri është i detyrueshëm");
-            isValid = false;
+        if (cursor != null && cursor.moveToFirst()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String surname = cursor.getString(cursor.getColumnIndexOrThrow("surname"));
+            String age = cursor.getString(cursor.getColumnIndexOrThrow("age"));
+
+            etName.setText(name);
+            etSurname.setText(surname);
+            etAge.setText(age);
+            etEmail.setText(email);
         } else {
-            etNameLayout.setError(null);
+            Toast.makeText(this, "No user data found!", Toast.LENGTH_SHORT).show();
         }
 
-        // Surname validation
-        if (TextUtils.isEmpty(etSurname.getText())) {
-            etSurnameLayout.setError("Mbiemri është i detyrueshëm");
-            isValid = false;
-        } else {
-            etSurnameLayout.setError(null);
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    // Metodë për të aktivizuar ose deaktivizuar modifikimin e të dhënave
+    private void enableEditing(boolean enable) {
+        etName.setEnabled(enable);
+        etSurname.setEnabled(enable);
+        etAge.setEnabled(enable);
+        etEmail.setEnabled(false); // Email është i pa-redaktueshëm
+        btnEdit.setVisibility(enable ? View.GONE : View.VISIBLE);
+        btnSave.setVisibility(enable ? View.VISIBLE : View.GONE);
+    }
+
+    // Metodë për të ruajtur të dhënat e modifikuara
+    private void saveUserData() {
+        String name = etName.getText().toString().trim();
+        String surname = etSurname.getText().toString().trim();
+        String age = etAge.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+
+        if (name.isEmpty() || surname.isEmpty() || age.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // Age validation
-        if (TextUtils.isEmpty(etAge.getText())) {
-            etAgeLayout.setError("Mosha është e detyrueshme");
-            isValid = false;
+        // Përditëso të dhënat në bazën e të dhënave
+        boolean isUpdated = databaseHelper.updateUserData(name, surname, age, email);
+        if (isUpdated) {
+            Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
         } else {
-            etAgeLayout.setError(null);
+            Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show();
         }
-
-        // Email validation
-        if (TextUtils.isEmpty(etEmail.getText()) || !Patterns.EMAIL_ADDRESS.matcher(etEmail.getText()).matches()) {
-            etEmailLayout.setError("Email-i është i detyrueshëm dhe duhet të jetë i vlefshëm");
-            isValid = false;
-        } else {
-            etEmailLayout.setError(null);
-        }
-
-        // Phone validation
-        if (TextUtils.isEmpty(etPhone.getText())) {
-            etPhoneLayout.setError("Numri i telefonit është i detyrueshëm");
-            isValid = false;
-        } else {
-            etPhoneLayout.setError(null);
-        }
-
-        // Address validation
-        if (TextUtils.isEmpty(etAddress.getText())) {
-            etAddressLayout.setError("Adresa është e detyrueshme");
-            isValid = false;
-        } else {
-            etAddressLayout.setError(null);
-        }
-
-        return isValid;
     }
 }
-

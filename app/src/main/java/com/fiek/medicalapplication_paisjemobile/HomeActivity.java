@@ -12,6 +12,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        // Merr email-in nga LogInActivity
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+
         // Linking the CardViews
         androidx.cardview.widget.CardView cardUpcomingAppointment = findViewById(R.id.cardUpcomingAppointment);
         androidx.cardview.widget.CardView cardTakeMedication = findViewById(R.id.cardTakeMedication);
@@ -32,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         // Navigate to Profile Activity
         profileIcon.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            intent.putExtra("USER_EMAIL", userEmail); // Dërgo email-in te ProfileActivity
             startActivity(intent);
         });
     }

@@ -22,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Initialize database helper
         databaseHelper = new DatabaseHelper(this);
 
         binding.signupButton.setOnClickListener(new View.OnClickListener() {
@@ -34,58 +35,54 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = binding.signupPassword.getText().toString();
                 String repeatPassword = binding.signupRepeatpassword.getText().toString();
 
-                // Kontrollo nëse fushat janë të zbrazëta
+                // Validate input
                 if (TextUtils.isEmpty(name) || TextUtils.isEmpty(surname) || TextUtils.isEmpty(age) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(repeatPassword)) {
                     showAlert("All fields are mandatory.");
                     return;
                 }
 
-                // Kontrollo nëse mosha është e vlefshme
                 if (!age.matches("\\d+") || Integer.parseInt(age) <= 0) {
                     showAlert("Please enter a valid age.");
                     return;
                 }
 
-                // Kontrollo nëse fjalëkalimet përputhen
                 if (!password.equals(repeatPassword)) {
                     showAlert("Passwords do not match.");
                     return;
                 }
 
-                // Validimi i fjalëkalimit
                 String passwordValidationMessage = getPasswordValidationMessage(password);
                 if (passwordValidationMessage != null) {
                     showAlert(passwordValidationMessage);
                     return;
                 }
 
-                // Kontrollo nëse email-i ekziston
                 if (databaseHelper.checkEmail(email)) {
                     showAlert("User already exists! Please login.");
                     return;
                 }
 
-                // Fut të dhënat në bazën e të dhënave
                 boolean insert = databaseHelper.insertData(name, surname, age, email, password);
                 if (insert) {
-                    Toast.makeText(SignUpActivity.this, "Signup Successful!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+                    Toast.makeText(SignUpActivity.this, "Signup Successful! Please log in.", Toast.LENGTH_SHORT).show();
+
+                    // Pas regjistrimit, dërgo përdoruesin në LogInActivity
+                    Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                     startActivity(intent);
-                    finish(); // Mbyll aktivitetin aktual
+                    finish(); // Mbyll SignUpActivity
                 } else {
                     showAlert("Signup Failed! Please try again.");
                 }
             }
         });
 
-        // Kalimi në ekranin e Login
         binding.loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                 startActivity(intent);
-                finish(); // Mbyll aktivitetin aktual
+                finish(); // Close SignUpActivity
             }
         });
     }
@@ -100,7 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (!password.matches(".*\\d.*")) {
             return "Password must contain at least one number.";
         }
-        return null; // Fjalëkalimi është i vlefshëm
+        return null;
     }
 
     private void showAlert(String message) {

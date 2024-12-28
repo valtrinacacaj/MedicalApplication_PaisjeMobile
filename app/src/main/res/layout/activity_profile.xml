@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,100 +19,75 @@
             android:scaleType="centerCrop" />
 
         <!-- Name -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_name_layout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Emri"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="Name:"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
 
         <!-- Surname -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_surname_layout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_surname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mbiemri"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="Surname:"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
 
         <!-- Age -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_age_layout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mosha"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="Age:"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
 
         <!-- Email -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_email_layout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="Email:"
+            android:textStyle="bold"/>
 
-        <!-- Phone -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_phone_layout"
+        <EditText
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nr. Tel"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:enabled="false"/>
 
-        <!-- Address -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_address_layout"
+        <!-- Edit Button -->
+        <Button
+            android:id="@+id/btn_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adresa"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:background="@drawable/edittext_border" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="Edit"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Save Button (initially hidden) -->
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:visibility="gone"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp" />
 
         <!-- Logout Button -->
         <Button
