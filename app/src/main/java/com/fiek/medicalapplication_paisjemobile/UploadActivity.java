@@ -1,6 +1,6 @@
 package com.fiek.medicalapplication_paisjemobile;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,9 +28,16 @@ public class UploadActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(view -> {
+            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+            int userId = sharedPreferences.getInt("userId", -1);
+
+            if (userId == -1) {
+                Toast.makeText(this, "Error saving data", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             String appointmentName = uploadAppointment.getText().toString().trim();
             String description = uploadDesc.getText().toString().trim();
-
             int day = uploadDate.getDayOfMonth();
             int month = uploadDate.getMonth();
             int year = uploadDate.getYear();
@@ -39,21 +46,18 @@ public class UploadActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String date = sdf.format(calendar.getTime());
 
-            if (appointmentName.isEmpty() || description.isEmpty()) {
+            if (appointmentName.isEmpty() || description.isEmpty() || date.isEmpty()) {
                 Toast.makeText(UploadActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            boolean isInserted = dbHelper.insertAppointment(appointmentName, description, date);
+            boolean isInserted = dbHelper.insertAppointment( appointmentName,description,date, userId);
             if (isInserted) {
                 Toast.makeText(UploadActivity.this, "Data saved successfully!", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 Toast.makeText(UploadActivity.this, "Failed to save data!", Toast.LENGTH_SHORT).show();
             }
-
-            Intent intent = new Intent(UploadActivity.this, UpcomingAppointmentActivity.class);
-            startActivity(intent);
-            finish();
         });
     }
 }

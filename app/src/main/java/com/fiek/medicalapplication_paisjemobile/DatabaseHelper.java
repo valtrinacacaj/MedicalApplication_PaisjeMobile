@@ -5,16 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import androidx.annotation.Nullable;
 import org.mindrot.jbcrypt.BCrypt;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "MedicalApp.db";
     public static final String TABLE_USER = "allusers";
     public static final String TABLE_APPOINTMENTS = "appointments";
+
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
@@ -24,22 +25,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "name TEXT," +
                 "surname TEXT," +
                 "age INTEGER," +
-                "email TEXT PRIMARY KEY," +
+                "email TEXT UNIQUE," +
                 "password TEXT)");
+
         db.execSQL("CREATE TABLE " + TABLE_APPOINTMENTS + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "appointment_name TEXT," +
                 "description TEXT," +
-                "date TEXT)");
-
-
-}
+                "date TEXT," +
+                "user_id INTEGER," +
+                "FOREIGN KEY(user_id) REFERENCES " + TABLE_USER + "(id))");
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENTS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_APPOINTMENTS + " ADD COLUMN user_id INTEGER");
+        }
     }
 
     public Boolean insertData(String name, String surname, int age, String email, String password) {
@@ -95,22 +97,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = db.update(TABLE_USER, contentValues, "email = ?", new String[]{email});
         return result > 0;
     }
-    public Cursor getAllAppointments() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        // Përputhja e kolonave me ato të tabelës
-        return db.rawQuery("SELECT appointment_name, description, date FROM " + TABLE_APPOINTMENTS, null);
-    }
 
-
-    public boolean insertAppointment(String appointmentName, String description, String date) {
+    public boolean insertAppointment(String appointmentName, String description, String date, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("appointment_name", appointmentName);
         contentValues.put("description", description);
         contentValues.put("date", date);
+        contentValues.put("user_id", userId);
 
         long result = db.insert(TABLE_APPOINTMENTS, null, contentValues);
         return result != -1;
+    }
+
+    public Cursor getAllAppointments(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(
+                TABLE_APPOINTMENTS,
+                null,
+                "user_id = ?",
+                new String[]{String.valueOf(userId)},
+                null,
+                null,
+                "date ASC"
+        );
+    }
+    public Cursor getAppointmentsForUser(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_APPOINTMENTS + " WHERE user_id = ? ORDER BY date ASC", new String[]{String.valueOf(userId)});
+    }
+
+    public int getUserIdFromEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM " + TABLE_USER + " WHERE email = ?", new String[]{email});
+
+        if (cursor.moveToFirst()) {
+            int userId = cursor.getInt(0);
+            cursor.close();
+            return userId;
+        }
+        cursor.close();
+        return -1;
     }
 
 

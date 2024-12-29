@@ -1,6 +1,7 @@
 package com.fiek.medicalapplication_paisjemobile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -51,26 +52,27 @@ public class UpcomingAppointmentActivity extends AppCompatActivity {
     private void refreshAppointments() {
         appointments.clear();
 
-        Cursor cursor = dbHelper.getAllAppointments();
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1);
+
+        if (userId == -1) {
+            Toast.makeText(this, "Error loading appointments", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Cursor cursor = dbHelper.getAppointmentsForUser(userId);
         if (cursor != null) {
             try {
-                if (cursor.moveToFirst()) {
-                    do {
-                        String title = cursor.getString(cursor.getColumnIndexOrThrow("appointment_name"));
-                        String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-                        String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
-                        appointments.add(new Appointment(title, description, date));
-                    } while (cursor.moveToNext());
+                while (cursor.moveToNext()) {
+                    String title = cursor.getString(cursor.getColumnIndexOrThrow("appointment_name"));
+                    String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                    String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                    appointments.add(new Appointment(title, description, date));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Error reading from database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             } finally {
                 cursor.close();
             }
         }
-
-
 
         adapter.notifyDataSetChanged();
 

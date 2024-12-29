@@ -1,10 +1,10 @@
 package com.fiek.medicalapplication_paisjemobile;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 import com.fiek.medicalapplication_paisjemobile.databinding.ActivityLogInBinding;
 
 public class LogInActivity extends AppCompatActivity {
@@ -29,28 +29,30 @@ public class LogInActivity extends AppCompatActivity {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(LogInActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
-                boolean isValid = databaseHelper.checkEmailPassword(email, password);
-                if (isValid) {
+                if (databaseHelper.checkEmailPassword(email, password)) {
+                    // Merr userId dhe ruaje në SharedPreferences
+                    int userId = databaseHelper.getUserIdFromEmail(email);
+                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("userId", userId);
+                    editor.putString("email", email);
+                    editor.apply();
+
                     Toast.makeText(LogInActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LogInActivity.this, SplashActivity.class);
-                    intent.putExtra("USER_EMAIL", email); // Dërgo email-in te SplashActivity
+                    Intent intent = new Intent(LogInActivity.this,SplashActivity.class);
                     startActivity(intent);
-                    finish(); // Mbyll LogInActivity
+                    finish();
                 } else {
                     Toast.makeText(LogInActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
         // Redirekto te SignUpActivity nëse përdoruesi nuk ka llogari
-        binding.signupRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish(); // Mbyll LogInActivity kur kalon në SignUpActivity
-            }
+        binding.signupRedirectText.setOnClickListener(v -> {
+            Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }
