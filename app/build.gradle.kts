@@ -17,6 +17,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true // Shënohet me `isDebuggable`
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -32,6 +35,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude("META-INF/NOTICE.md")
+        exclude("META-INF/LICENSE.md")
+    }
+
 }
 
 dependencies {
@@ -45,7 +53,10 @@ dependencies {
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.24")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
     implementation ("com.google.android.material:material:1.6.0")
+    implementation("com.sun.mail:android-mail:1.6.7")
+    implementation("com.sun.mail:android-activation:1.6.7")
+    implementation ("org.mindrot:jbcrypt:0.4")
 
-    implementation ("de.svenkubiak:jBCrypt:0.4")
+
 
 }
