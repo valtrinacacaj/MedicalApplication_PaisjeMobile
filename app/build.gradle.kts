@@ -15,6 +15,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        exclude ("META-INF/NOTICE.md")
+        exclude ("META-INF/LICENSE.md")
+        exclude ("META-INF/LICENSE")
+    }
 
     buildTypes {
         debug {

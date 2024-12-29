@@ -3,6 +3,7 @@ package com.fiek.medicalapplication_paisjemobile;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.fiek.medicalapplication_paisjemobile.databinding.ActivityLogInBinding;
@@ -21,6 +22,12 @@ public class LogInActivity extends AppCompatActivity {
         // Instanco DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
+
+        TextView forgotPasswordText = findViewById(R.id.forgotPasswordText);
+        forgotPasswordText.setOnClickListener(v -> {
+            Intent intent = new Intent(LogInActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
         // Klikimi për Login
         binding.loginButton.setOnClickListener(v -> {
             String email = binding.loginEmail.getText().toString().trim();

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login"
     tools:context=".LogInActivity">
-
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -51,6 +49,8 @@
                     android:text="Login"
                     android:textSize="18sp"
                     app:cornerRadius="30dp" />
+
+                <!-- Text për regjistrim të ri -->
                 <TextView
                     android:id="@+id/signupRedirectText"
                     android:layout_width="wrap_content"
@@ -61,6 +61,20 @@
                     android:text="Not yet registered? Signup"
                     android:textColor="@color/blue"
                     android:textSize="18sp" />
+
+                <!-- Butoni Forgot Password -->
+                <TextView
+                    android:id="@+id/forgotPasswordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="14dp"
+                    android:padding="8dp"
+                    android:text="Forgot your password?"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"
+                    android:clickable="true"
+                    android:focusable="true" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
