@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".UpcomingAppointmentActivity">
 
-    <!-- ListView për shfaqjen e appointments -->
-    <ListView
+    <!-- RecyclerView për shfaqjen e appointments -->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/appointmentListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/fab"
         android:padding="16dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp" />
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
     <!-- FloatingActionButton për shtimin e appointments -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

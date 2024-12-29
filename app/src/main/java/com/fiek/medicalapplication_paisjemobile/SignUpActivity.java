@@ -30,22 +30,24 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = binding.signupName.getText().toString().trim();
                 String surname = binding.signupSurname.getText().toString().trim();
-                String age = binding.signupAge.getText().toString().trim();
+                String ageString = binding.signupAge.getText().toString().trim();
                 String email = binding.signupEmail.getText().toString().trim();
                 String password = binding.signupPassword.getText().toString();
                 String repeatPassword = binding.signupRepeatpassword.getText().toString();
 
                 // Validate input
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(surname) || TextUtils.isEmpty(age) ||
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(surname) || TextUtils.isEmpty(ageString) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(repeatPassword)) {
                     showAlert("All fields are mandatory.");
                     return;
                 }
 
-                if (!age.matches("\\d+") || Integer.parseInt(age) <= 0) {
+                if (!ageString.matches("\\d+") || Integer.parseInt(ageString) <= 0) {
                     showAlert("Please enter a valid age.");
                     return;
                 }
+
+                int age = Integer.parseInt(ageString); // Konvertoni moshën në int
 
                 if (!password.equals(repeatPassword)) {
                     showAlert("Passwords do not match.");
@@ -63,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                boolean insert = databaseHelper.insertData(name, surname, age, email, password);
+                boolean insert = databaseHelper.insertData(name, surname, age, email, password); // Kalo `age` si int
                 if (insert) {
                     Toast.makeText(SignUpActivity.this, "Signup Successful! Please log in.", Toast.LENGTH_SHORT).show();
 
@@ -76,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         binding.loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
