@@ -35,7 +35,7 @@
                 android:paddingTop="30dp"
                 android:paddingBottom="60dp"
                 android:textAlignment="center"
-                android:textColor="@color/blue"/>
+                android:textColor="@color/blue" />
 
             <!-- EditText për emrin e medikamentit -->
             <EditText
@@ -47,9 +47,7 @@
                 android:padding="16dp"
                 android:hint="Enter medication name"
                 android:gravity="start|center_vertical"
-                android:textColor="@color/blue"/>
-
-
+                android:textColor="@color/blue" />
 
             <!-- EditText për dozën e medikamentit -->
             <EditText
@@ -61,16 +59,19 @@
                 android:padding="16dp"
                 android:hint="Enter dosage"
                 android:gravity="start|center_vertical"
-                android:textColor="@color/blue"/>
+                android:textColor="@color/blue" />
 
-            <!-- Spinner për caktimin e orarit të marrjes së medikamentit (schedule) -->
-            <Spinner
-                android:id="@+id/uploadScheduler"
+            <!-- EditText për detaje shtesë të medikamentit -->
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:id="@+id/uploadScheduler"
+                android:background="@drawable/blue_border"
                 android:layout_marginTop="30dp"
                 android:padding="16dp"
-                android:entries="@array/schedule_options"/>
+                android:hint="Enter scheduler"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/blue" />
 
             <!-- Butoni për ruajtjen e të dhënave -->
             <Button
@@ -81,7 +82,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                app:cornerRadius="20dp"/>
+                app:cornerRadius="20dp" />
 
         </LinearLayout>
 

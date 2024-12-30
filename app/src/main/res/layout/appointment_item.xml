@@ -2,32 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="16dp"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginBottom="10dp">
 
     <TextView
-        android:id="@+id/appointment_title"
-        android:layout_width="match_parent"
+        android:id="@+id/appointmentTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Appointment Title"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/appointment_description"
-        android:layout_width="match_parent"
+        android:id="@+id/appointmentDescription"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="Appointment Description"
         android:textSize="14sp"
-        android:textColor="@color/blue" />
+        android:layout_marginTop="4dp"/>
 
     <TextView
-        android:id="@+id/appointment_date"
-        android:layout_width="match_parent"
+        android:id="@+id/appointmentDate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"
+        android:text="Appointment Date"
         android:textSize="14sp"
-        android:textColor="@color/blue" />
+        android:layout_marginTop="4dp"/>
 
+    <!-- Butoni për fshirjen e këtij appointment -->
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/blue"
+        android:textColor="@android:color/white"/>
 </LinearLayout>

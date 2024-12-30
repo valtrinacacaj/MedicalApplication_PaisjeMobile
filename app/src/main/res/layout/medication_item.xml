@@ -22,11 +22,12 @@
         android:textSize="14sp"
         android:textColor="@color/blue" />
 
-    <Spinner
-        android:id="@+id/medication_schedule"
+    <TextView
+        android:id="@+id/medication_scheduler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Scheduler"
+        android:textSize="14sp"
         android:textColor="@color/blue" />
-
 
 </LinearLayout>

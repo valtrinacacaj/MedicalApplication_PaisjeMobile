@@ -169,4 +169,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
 
     }
+
+
+    public void deleteAppointment(int appointmentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_APPOINTMENTS, "id = ?", new String[]{String.valueOf(appointmentId)});
+        db.close();
+    }
+
+
+    public void deleteAllAppointmentsForUser(int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_APPOINTMENTS, "user_id = ?", new String[]{String.valueOf(userId)});
+        db.close();
+    }
 }
