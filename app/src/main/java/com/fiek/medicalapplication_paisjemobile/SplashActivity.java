@@ -3,6 +3,7 @@ package com.fiek.medicalapplication_paisjemobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         int splashTime = 3000;
 
         // Pas kalimit të kohës, kalon në HomeActivity
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             // Kalo në HomeActivity duke kaluar email-in
             Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
             intent.putExtra("USER_EMAIL", userEmail); // Dërgo email-in te HomeActivity

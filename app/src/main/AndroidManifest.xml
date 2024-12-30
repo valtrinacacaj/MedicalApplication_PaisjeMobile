@@ -3,6 +3,9 @@
     package="com.fiek.medicalapplication_paisjemobile"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions must be declared as direct children of the manifest tag -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +17,6 @@
         android:theme="@style/Theme.MedicalApplication_PaisjeMobile"
         tools:targetApi="31">
 
-
         <activity
             android:name=".LogInActivity"
             android:exported="true">
@@ -24,35 +26,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".SignUpActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".HomeActivity" android:exported="false" />
+        <activity android:name=".UpcomingAppointmentActivity" android:exported="false" />
+        <activity android:name=".TakeMedicationActivity" android:exported="false" />
+        <activity android:name=".SplashActivity" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
+        <activity android:name=".UploadActivity" android:exported="false" />
+        <receiver android:name=".NotificationReceiver" android:enabled="true" android:exported="false" />
 
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".UpcomingAppointmentActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".TakeMedicationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UploadActivity"
-            android:exported="false" />
     </application>
 </manifest>
