@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435283535313",
+    "project_id": "medicalappid",
+    "storage_bucket": "medicalappid.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435283535313:android:2acbd2bca23c9721452cf0",
+        "android_client_info": {
+          "package_name": "com.fiek.medicalapplication_paisjemobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO-Ssr_NMI2uFYBHbCiHd-U2tpW1BYxf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
